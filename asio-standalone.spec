@@ -20,28 +20,25 @@ Conflicts:      asio-devel
 Standalone Asio header-only library without Boost dependency.
 
 %prep
-%autosetup -n asio-asio-%{tag_version}
+%setup -q -n asio-asio-%{tag_version}
 
 %build
-cd asio
-./autogen.sh
-%configure --without-boost
-cd ..
+(
+  cd asio
+  ./autogen.sh
+  %configure --without-boost
+)
 
 %install
-cd asio
+(
+  cd asio
+  %make_install
+)
 
-mkdir -p %{buildroot}%{_includedir}
-cp -pr include/* %{buildroot}%{_includedir}/
-find %{buildroot}%{_includedir} -name "Makefile*" -delete
-
-mkdir -p %{buildroot}%{_datadir}/pkgconfig
-cp asio.pc %{buildroot}%{_datadir}/pkgconfig/asio.pc
-
-cd ..
+rm -rf %{buildroot}%{_datadir}/doc/asio
 
 %files
-%license LICENSE_1_0.txt
+%license asio/LICENSE_1_0.txt
 %{_includedir}/asio.hpp
 %{_includedir}/asio/
 %{_datadir}/pkgconfig/asio.pc
