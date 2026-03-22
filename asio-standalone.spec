@@ -12,6 +12,7 @@ BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
 BuildRequires:  make
+BuildRequires:  pkgconfig
 
 Conflicts:      asio-devel
 
@@ -25,9 +26,11 @@ Standalone Asio header-only library without Boost dependency.
 cd asio
 ./autogen.sh
 %configure --without-boost
+cd ..
 
 %install
 cd asio
+
 mkdir -p %{buildroot}%{_includedir}
 cp -pr include/* %{buildroot}%{_includedir}/
 find %{buildroot}%{_includedir} -name "Makefile*" -delete
@@ -35,11 +38,13 @@ find %{buildroot}%{_includedir} -name "Makefile*" -delete
 mkdir -p %{buildroot}%{_datadir}/pkgconfig
 cp asio.pc %{buildroot}%{_datadir}/pkgconfig/asio.pc
 
+cd ..
+
 %files
+%license LICENSE_1_0.txt
 %{_includedir}/asio.hpp
 %{_includedir}/asio/
 %{_datadir}/pkgconfig/asio.pc
-%license LICENSE_1_0.txt
 
 %changelog
 * Sun Mar 22 2026 Your Name <mayafluxcollective@proton.me> - 1.30.2-2
